@@ -2,7 +2,7 @@ const cron = require("node-cron");
 const fs = require("fs");
 const path = require("path");
 
-// Ensure the logs directory exists
+
 const ensureLogFolderExists = () => {
   const logFolderPath = path.join(__dirname, "../logs");
   if (!fs.existsSync(logFolderPath)) {
@@ -11,19 +11,18 @@ const ensureLogFolderExists = () => {
   }
 };
 
-// Utility to pad single digits (e.g., 5 -> 05)
+
 const pad = (num) => (num < 10 ? "0" + num : num);
 
-// Schedule notifications and logging for events
 const scheduleNotifications = (events, broadcast) => {
-  // Clear existing cron tasks to avoid duplicate notifications
+ 
   cron.getTasks().forEach((task) => task.stop());
 
   events.forEach((event) => {
     const eventTime = new Date(event.time);
     console.log(`Event scheduled for: ${event.title} at ${eventTime}`);
 
-    // Schedule a notification 5 minutes before the event
+
     const notifyTime = new Date(eventTime.getTime() - 5 * 60 * 1000);
     console.log(`Notification for event will be sent at: ${notifyTime}`);
 
@@ -49,7 +48,7 @@ const scheduleNotifications = (events, broadcast) => {
       );
     }
 
-    // Schedule logging of the event as completed
+    
     const eventCronExpression = `${pad(eventTime.getMinutes())} ${pad(
       eventTime.getHours()
     )} ${pad(eventTime.getDate())} ${pad(eventTime.getMonth() + 1)} *`;
@@ -72,9 +71,9 @@ const scheduleNotifications = (events, broadcast) => {
   });
 };
 
-// Log completed event to a file
+
 const logCompletedEvent = (event) => {
-  ensureLogFolderExists(); // Ensure logs directory exists
+  ensureLogFolderExists(); 
 
   const logPath = path.join(__dirname, "logs/completedEvents.log");
   const logEntry = `${new Date().toISOString()} - Event: ${
