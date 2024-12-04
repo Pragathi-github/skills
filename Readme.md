@@ -20,6 +20,10 @@ this will give :
 }
 as a response.
 
+for get event list 
+http://localhost:3000/events
+
+
 websocket
 ws://localhost:3000 will connect and it will notify 5 minutes before event started.
 
